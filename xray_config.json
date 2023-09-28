@@ -1,12 +1,12 @@
 {
     "log": {
-        "loglevel": "info"
+        "loglevel": "inbounds"
     },
     "inbounds": [
         {
-            "tag": "VMess TCP",
+            "tag": "VMess Tcp HEADER",
             "listen": "0.0.0.0",
-            "port": 8081,
+            "port": 5000,
             "protocol": "vmess",
             "settings": {
                 "clients": []
@@ -14,62 +14,41 @@
             "streamSettings": {
                 "network": "tcp",
                 "tcpSettings": {
+                    "connectionReuse": true,
                     "header": {
                         "type": "http",
                         "request": {
-                            "method": "GET",
+                            "version": "1.1",
+                            "method": "POST",
                             "path": [
                                 "/"
                             ],
                             "headers": {
                                 "Host": [
-                                    "google.com"
-                                ]
+                                    ""
+                                ],
+                                "User-Agent": [
+                                    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
+                                    "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
+                                ],
+                                "Accept-Encoding": [
+                                    "gzip, deflate"
+                                ],
+                                "Connection": [
+                                    "keep-alive"
+                                ],
+                                "Pragma": "no-cache"
                             }
-                        },
-                        "response": {}
+                        }
                     }
                 },
                 "security": "none"
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "VMess Websocket",
-            "listen": "0.0.0.0",
-            "port": 8080,
-            "protocol": "vmess",
-            "settings": {
-                "clients": []
-            },
-            "streamSettings": {
-                "network": "ws",
-                "wsSettings": {
-                    "path": "/",
-                    "headers": {
-                        "Host": "google.com"
-                    }
-                },
-                "security": "none"
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
             }
         },
         {
             "tag": "VLESS TCP REALITY",
             "listen": "0.0.0.0",
-            "port": 8443,
+            "port": 2087,
             "protocol": "vless",
             "settings": {
                 "clients": [],
@@ -77,20 +56,18 @@
             },
             "streamSettings": {
                 "network": "tcp",
-                "tcpSettings": {},
                 "security": "reality",
                 "realitySettings": {
-                    "show": false,
-                    "dest": "discordapp.com:443",
+                    "show": true,
+                    "dest": "discord.com:443",
                     "xver": 0,
                     "serverNames": [
-                        "cdn.discordapp.com",
-                        "discordapp.com"
+                        "discord.com"
                     ],
-                    "privateKey": "MMX7m0Mj3faUstoEm5NBdegeXkHG6ZB78xzBv2n3ZUA",
+                    "privatekey": "oMlT4_Q8G7xiVeyZXppwK9hPGxAuMgI-Pi8dM8CB0XI",
+                    "publicKey": "AoVVD-FGx5-IC2fwjqH3B_0M3T-muzmULO73sw4BLGw",
                     "shortIds": [
-                        "",
-                        "6ba85179e30d4fc2"
+                        "057d35c3dd07892a"
                     ]
                 }
             },
@@ -100,127 +77,40 @@
                     "http",
                     "tls"
                 ]
-            }
-        },
-        {
-            "tag": "VLESS GRPC REALITY",
-            "listen": "0.0.0.0",
-            "port": 2053,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "grpc",
-                "grpcSettings": {
-                    "serviceName": "xyz"
-                },
-                "security": "reality",
-                "realitySettings": {
-                    "show": false,
-                    "dest": "discordapp.com:443",
-                    "xver": 0,
-                    "serverNames": [
-                        "cdn.discordapp.com",
-                        "discordapp.com"
-                    ],
-                    "privateKey": "MMX7m0Mj3faUstoEm5NBdegeXkHG6ZB78xzBv2n3ZUA",
-                    "shortIds": [
-                        "",
-                        "6ba85179e30d4fc2"
-                    ]
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "Trojan Websocket TLS",
-            "listen": "0.0.0.0",
-            "port": 2083,
-            "protocol": "trojan",
-            "settings": {
-                "clients": []
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "tls",
-                "tlsSettings": {
-                    "certificates": [
-                        {
-                            "certificate": [
-                                "-----BEGIN CERTIFICATE-----",
-                                "MIIBvTCCAWOgAwIBAgIRAIY9Lzn0T3VFedUnT9idYkEwCgYIKoZIzj0EAwIwJjER",
-                                "MA8GA1UEChMIWHJheSBJbmMxETAPBgNVBAMTCFhyYXkgSW5jMB4XDTIzMDUyMTA4",
-                                "NDUxMVoXDTMzMDMyOTA5NDUxMVowJjERMA8GA1UEChMIWHJheSBJbmMxETAPBgNV",
-                                "BAMTCFhyYXkgSW5jMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEGAmB8CILK7Q1",
-                                "FG47g5VXg/oX3EFQqlW8B0aZAftYpHGLm4hEYVA4MasoGSxRuborhGu3lDvlt0cZ",
-                                "aQTLvO/IK6NyMHAwDgYDVR0PAQH/BAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMB",
-                                "MAwGA1UdEwEB/wQCMAAwOwYDVR0RBDQwMoILZ3N0YXRpYy5jb22CDSouZ3N0YXRp",
-                                "Yy5jb22CFCoubWV0cmljLmdzdGF0aWMuY29tMAoGCCqGSM49BAMCA0gAMEUCIQC1",
-                                "XMIz1XwJrcu3BSZQFlNteutyepHrIttrtsfdd05YsQIgAtCg53wGUSSOYGL8921d",
-                                "KuUcpBWSPkvH6y3Ak+YsTMg=",
-                                "-----END CERTIFICATE-----"
-                            ],
-                            "key": [
-                                "-----BEGIN RSA PRIVATE KEY-----",
-                                "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg7ptMDsNFiL7iB5N5",
-                                "gemkQUHIWvgIet+GiY7x7qB13V6hRANCAAQYCYHwIgsrtDUUbjuDlVeD+hfcQVCq",
-                                "VbwHRpkB+1ikcYubiERhUDgxqygZLFG5uiuEa7eUO+W3RxlpBMu878gr",
-                                "-----END RSA PRIVATE KEY-----"
-                            ]
-                        }
-                    ],
-                    "minVersion": "1.2",
-                    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "Shadowsocks TCP",
-            "listen": "0.0.0.0",
-            "port": 1080,
-            "protocol": "shadowsocks",
-            "settings": {
-                "clients": [],
-                "network": "tcp,udp"
             }
         }
     ],
     "outbounds": [
         {
             "protocol": "freedom",
+            "settings": {},
             "tag": "DIRECT"
         },
         {
             "protocol": "blackhole",
+            "settings": {},
             "tag": "BLOCK"
         }
     ],
+    "dns": {
+        "servers": [
+            "8.8.8.8",
+            "8.8.4.4",
+            "127.0.0.1"
+        ]
+    },
     "routing": {
         "rules": [
             {
                 "ip": [
                     "geoip:private"
                 ],
+                "outboundTag": "BLOCK",
+                "type": "field"
+            },
+            {
                 "domain": [
-                    "geosite:private"
-                ],
-                "protocol": [
-                    "bittorrent"
+                    "localhost"
                 ],
                 "outboundTag": "BLOCK",
                 "type": "field"
